@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OGRVRTDataSource>
+    <OGRVRTLayer name="Station_Coordiantes-Station_Coordiantes">
+        <SrcDataSource relativeToVRT="1">Station_Coordiantes.csv</SrcDataSource>
+        <!--Header=False-->
+        <SrcLayer>Station_Coordiantes</SrcLayer>
+        <Field name="Station name" src="Station name" type="String"/>
+        <Field name="Land use" src="Land use" type="String"/>
+        <Field name="Aspect" src="Aspect" type="String"/>
+        <Field name="Altitude" src="Altitude" type="String"/>
+        <Field name="Altitude_approx" src="Altitude_approx" type="String"/>
+        <GeometryType>wkbPoint</GeometryType>
+        <LayerSRS>EPSG:4326</LayerSRS>
+        <GeometryField encoding="PointFromColumns" x="Longitude" y="Latitude"/>
+    </OGRVRTLayer>
+</OGRVRTDataSource>
