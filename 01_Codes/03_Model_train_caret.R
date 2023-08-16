@@ -26,7 +26,7 @@ data$week <- as.numeric(format(data$Date_GTD,"%U"))
 
 
 data <- data %>% 
-    filter(Station_S1%in%c("B1","B2","I1","M2","P1","P2")) #%>% 
+    filter(Station_S1%in%c("B1","B2","I1","M2","P1","P2")) %>% #%>% 
     #filter(Station_S1%in%c("B1","B2","I1","M5","P1","S3")) #%>% 
     filter( month<=11 & month>= 3)
     #filter( month<=11 & month>=3 )
@@ -137,7 +137,7 @@ fm<- as.formula(paste0("obs_05" , " ~ ",
                                                         "Station_S1","S1","Date_S1",
                                                         "Orbit","Date_GTD",
                                                         "year_month", "sd_obs_02","sd_obs_05",
-                                                        "obs_02","VV","VH","month","landuse","week")),collapse=" + " )))
+                                                        "obs_02","VV","VH","month","week")),collapse=" + " )))
 
 tunegrid <- expand.grid(.mtry=seq(from=2,to=8,by=2))
 rf <- train(fm, 
@@ -243,14 +243,14 @@ gbmFit2 <- train(fm, data = train_df,
                  ## Now specify the exact models 
                  ## to evaluate:
                  tuneGrid = gbmGrid)
-
+model_test(test_df,model= gbmFit2)
 summary(gbmFit2, cBars = 10, las = 2)
 
 varImpPlot(gbmFit2[11][[1]])
 plot(varImp(gbmFit2),main="GBM relative importance")
 
 imp
-
+library(gbm)
 ggplot(varImp(gbmFit2))+
   geom_area()+
   theme_classic()+
@@ -275,7 +275,7 @@ ggplot(imp, aes(y=reorder(varnames, Overall),x=Overall, weight= Overall,fill=Ove
 
 ##############
 
-model_test(test_df,model= gbmFit2)
+
 gbmFit2
 trellis.par.set(caretTheme())
 plot(gbmFit2,xlab="N° trees")   
